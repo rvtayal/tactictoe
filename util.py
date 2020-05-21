@@ -1,5 +1,10 @@
 # util file for game
 
-def pause():
+import time
+
+def waitForInput():
 	print("Press enter to continue")
 	input()
+
+def pause(t):
+	time.sleep(t)
