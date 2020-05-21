@@ -10,7 +10,7 @@ class Game:
 	def printBoard(self):
 		disp = self.board.getDisplay()
 		r, c = disp.shape
-		for i in range(r):
+		for i in range(r)
 			row = ''
 			for j in range(c):
 				row += disp[i,j] + ' '
@@ -42,6 +42,15 @@ class Game:
 			return 'Move anywhere.'
 		else:
 			return 'Move in board ' + str(self.boardToMoveIn + 1) + '.'
+
+	def move(self, who, boardnum, boardloc):
+		if self.validateMove(boardnum):
+			if self.board.move(who, boardnum, boardloc):
+				return None
+			else:
+				return "Please play in unoccupied square."
+		else:
+			return "Please play in correct board."
 
 def main():
 	game = Game()
