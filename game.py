@@ -40,11 +40,14 @@ class Game:
 	def getState(self):
 		return (self.board.boards, self.board.prevMove)
 
+	#def getValidMoves(self):
+
+
 	def getNextMoveString(self):
 		if self.boardToMoveIn is None:
 			return 'Move anywhere.'
 		else:
-			return 'Move in board ' + str(self.boardToMoveIn + 1) + '.'
+			return 'Move in board ' + str(self.boardToMoveIn) + '.'
 
 	def move(self, who, boardnum, boardloc):
 		if self.validateMove(boardnum):
@@ -64,7 +67,7 @@ def main():
 
 			boardValid = False
 			while not boardValid:
-				boardnum = int(input(game.turn + "'s turn. " + game.getNextMoveString() + " Which board?\t"))-1
+				boardnum = int(input(game.turn + "'s turn. " + game.getNextMoveString() + " Which board?\t"))
 				boardValid = game.validateMove(boardnum)
 
 			row = int(input("Which row? (0, 1, or 2)\t"))
