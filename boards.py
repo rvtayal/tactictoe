@@ -130,8 +130,12 @@ class LargeBoard:
 
     def checkWinner(self):
         for i in range(9):
-            if self.boards[i].winner is not None:
-                self.winners[i] = self.boards[i].winner
+            if self.winners[i] == 0:
+                if self.boards[i].winner is 'x':
+                    self.winners[i] = 1
+                elif self.boards[i].winner is 'o':
+                    self.winners[i] = -1
+
         if self.winner is None:
             self.checkRows()
             self.checkCols()

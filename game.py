@@ -40,7 +40,12 @@ class Game:
 	def getState(self):
 		return (self.board.boards, self.board.prevMove)
 
-	#def getValidMoves(self):
+	def getValidMoves(self):
+		valid = []
+		pBoard, pSquare = self.board.prevMove
+		if self.board.winners[pBoard]:
+			need to finish get valid moves method
+
 
 
 	def getNextMoveString(self):
