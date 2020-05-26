@@ -7,6 +7,9 @@ class Game:
 		self.turn = 'x'
 		self.boardToMoveIn = None
 
+	def isWon(self):
+		return not (self.board.winner is None)
+
 	def printBoard(self):
 		disp = self.board.getDisplay()
 		r, c = disp.shape
@@ -79,7 +82,7 @@ class Game:
 
 def main():
 	game = Game()
-	while game.board.winner is None:
+	while not game.isWon():
 		moveValid = False
 		while not moveValid:
 			game.printBoard()
