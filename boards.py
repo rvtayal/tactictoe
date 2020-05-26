@@ -129,6 +129,9 @@ class LargeBoard:
         self.prevMove = None
 
     def checkWinner(self):
+        for i in range(9):
+            if self.boards[i].winner is not None:
+                self.winners[i] = self.boards[i].winner
         if self.winner is None:
             self.checkRows()
             self.checkCols()

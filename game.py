@@ -10,7 +10,7 @@ class Game:
 	def printBoard(self):
 		disp = self.board.getDisplay()
 		r, c = disp.shape
-		for i in range(r)
+		for i in range(r):
 			row = ''
 			for j in range(c):
 				row += disp[i,j] + ' '
@@ -36,6 +36,9 @@ class Game:
 			return True
 		else:
 			return self.boardToMoveIn == boardnum
+
+	def getState(self):
+		return (self.board.boards, self.board.prevMove)
 
 	def getNextMoveString(self):
 		if self.boardToMoveIn is None:
