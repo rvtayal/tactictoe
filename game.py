@@ -41,12 +41,26 @@ class Game:
 		return (self.board.boards, self.board.prevMove)
 
 	def getValidMoves(self):
-		valid = []
 		pBoard, pSquare = self.board.prevMove
-		if self.board.winners[pBoard]:
-			need to finish get valid moves method
+		pSquareNum = (pSquare[0] * r) + pSquare[1]
+		if self.board.winners[pSquareNum] == 0:
+			# sent to unwon square, move in required square
+			return self.getValidMovesInBoard(pSquareNum)
+		else:
+			#sent to board that has been won, all moves valid
+			valid = []
+			for i in range(9):
+				if self.board.winners[i] == 0:
+					valid.append(self.getValidMovesInBoard(i))
 
-
+	def getValidMovesInBoard(boardnum):
+		moves = []
+		board = self.board.boards[boardnum]
+		for i in range(3):
+			for j in range(3):
+				if board[i,j] == 0:
+					moves.append((boardnum, (i,j)))
+		return moves
 
 	def getNextMoveString(self):
 		if self.boardToMoveIn is None:
