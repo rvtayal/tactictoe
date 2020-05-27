@@ -6,6 +6,10 @@ class SmallBoard:
         self.winner = None
         self.board = np.zeros((3,3))
 
+    def __getitem__(self, pos):
+        x, y = pos
+        return self.board[x, y]
+
     def __eq__(self, other):
         if isinstance(other, self.__class__):
             otherboard = other.board
