@@ -11,6 +11,9 @@ class Game:
     def isWon(self):
         return not (self.board.winner is None)
 
+    def getWinner(self):
+        return self.board,winner
+
     def printBoard(self):
         disp = self.board.getDisplay()
         r, c = disp.shape
@@ -65,9 +68,6 @@ class Game:
         return moves
 
     def move(self, boardloc):
-        print(self.boardToMoveIn, boardloc)
-        print(self.validMoves)
-        print( (1, (1,1)) in self.validMoves )
         if (self.boardToMoveIn, boardloc) in self.validMoves:
             return self.board.move(self.turn, self.boardToMoveIn, boardloc)
 
