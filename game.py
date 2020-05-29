@@ -71,8 +71,14 @@ class Game:
         if (self.boardToMoveIn, boardloc) in self.validMoves:
             return self.board.move(self.turn, self.boardToMoveIn, boardloc)
 
+    def invert(self):
+        self.board.invert()
+
 def main(): 
     game = Game()
+    game.move()
+
+    '''
     while not game.isWon():
 
         #display game state
@@ -92,6 +98,7 @@ def main():
             game.incrementTurn()
         else:
             print("invalid turn, try again")
+    '''
 
 if __name__ == "__main__":
     main()

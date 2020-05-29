@@ -64,6 +64,13 @@ class SmallBoard:
                     chAr[i,j] = ' '
         return chAr
 
+    def invert(self):
+        self.board = self.board * -1
+        if self.winner is 'x':
+            self.winner = 'o'
+        elif self.winner is 'o':
+            self.winner = 'x'
+
     def move(self, who, row, col):
         if who not in ['x', 'o']:
             return False
@@ -219,6 +226,16 @@ class LargeBoard:
                     row += disp[i,j] + ' '
                 print(row)
         return disp
+
+    def invert(self):
+        for b in self.boards:
+            b.invert()
+        for i in range(9):
+            self.winners[i] = self.winners[i] * -1
+        if self.winner is 'x':
+            self.winner = 'o'
+        elif self.winner is 'o':
+            self.winner = 'x'
                 
 def main():
     '''
