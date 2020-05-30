@@ -130,10 +130,13 @@ class SmallBoard:
 
         return disp
 
+    def getState(self):
+        return self.board
+
 class LargeBoard:
     def __init__(self):
         self.boards = []
-        for i in range(9):
+        for _ in range(9):
             self.boards.append(SmallBoard())
         self.winners = np.zeros((9,))
         self.winner = None
@@ -236,6 +239,9 @@ class LargeBoard:
             self.winner = 'o'
         elif self.winner is 'o':
             self.winner = 'x'
+
+    def getState(self):
+        return [b.getState() for b in self.boards]
                 
 def main():
     '''

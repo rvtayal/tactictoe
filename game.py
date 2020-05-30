@@ -33,7 +33,7 @@ class Game:
         self.validMoves = self.getValidMoves()
 
     def getState(self):
-        return (self.board.boards, self.board.prevMove)
+        return (self.board.getState(), self.board.prevMove)
 
     def getValidMoves(self):
         if self.board.prevMove is None:
@@ -57,6 +57,7 @@ class Game:
             for i in range(9):
                 if self.board.winners[i] == 0:
                     valid.extend(self.getValidMovesInBoard(i))
+            return valid
 
     def getValidMovesInBoard(self, boardnum):
         moves = []
@@ -67,16 +68,30 @@ class Game:
                     moves.append((boardnum, (i,j)))
         return moves
 
-    def move(self, boardloc):
-        if (self.boardToMoveIn, boardloc) in self.validMoves:
-            return self.board.move(self.turn, self.boardToMoveIn, boardloc)
+    def move(self, move):
+        if move not in self.validMoves:
+            return False
+        ret = self.board.move(self.turn, move[0], move[1])
+
+        if ret:
+            self.incrementTurn()
+        return ret
 
     def invert(self):
         self.board.invert()
 
 def main(): 
     game = Game()
-    game.move()
+    game.move((1, (1,1)))
+    game.move((4, (2,2)))
+    game.move((8, (1,1)))
+    game.move((4, (2,1)))
+    game.move((7, (1,1)))
+    game.move((4, (2,0)))
+    game.move((6, (1,1)))
+    game.printBoard()
+
+    print(game.getValidMoves())
 
     '''
     while not game.isWon():
