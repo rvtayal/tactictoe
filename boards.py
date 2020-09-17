@@ -142,6 +142,9 @@ class LargeBoard:
         self.winner = None
         self.prevMove = None
 
+    #def __hash__(self):
+    #    for b in self.boards
+
     def checkWinner(self):
         for i in range(9):
             if self.winners[i] == 0:
@@ -241,26 +244,9 @@ class LargeBoard:
             self.winner = 'x'
 
     def getState(self):
-        return [b.getState() for b in self.boards]
+        return self
                 
 def main():
-    '''
-    b = SmallBoard()
-    b.move('x', 0, 1)
-    b.move('o', 0, 2)
-    b.move('x', 1, 1)
-    b.move('o', 1, 2)
-    b.move('x', 2, 1)
-    b.move('o', 2, 2)
-    print('char Array')
-    print(b.getCharArray())
-    print('display')
-    b.getDisplay()
-    print('board')
-    print(b.board)
-    print('winner')
-    print(b.winner)
-    '''
     b = LargeBoard()
     b.getDisplay(True)
     b.move('x', 5, (2, 0))

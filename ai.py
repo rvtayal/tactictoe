@@ -16,9 +16,13 @@ epsilon = 0.5   # chance of random turn
 
 class Ai:
     def __init__(self):
-        self.map_ = HashMap()
+        self.map_ = HashMap(aiHash)
         self.game_ = Game()
         seed((datetime.now()-datetime(1970,1,1)).total_seconds())
+
+    def resetGame(self):
+        if self.game_.isWon():
+            self.game_ = Game()
 
     def printGame(self):
         self.game_.printBoard()
@@ -31,6 +35,7 @@ class Ai:
             #random choice
             move = validMoves[randint(0, len(validMoves)-1)]
         else:
+            #best choice
             gamestates = []
             for v in validMoves:
                 gamestates.append((state, v))
@@ -51,7 +56,17 @@ class Ai:
         for nM in nextMoves:
             nextGameStates.append((nextState, nM))
 
+        #print("map", self.map_.map_)
+        #print(state)
+        #print(move)
+        #print("map[(state, move)]",self.map_[(state, move)])
+        #print("max val", np.max(self.map_[nextGameStates]))
         self.map_[(state, move)] = self.map_[(state, move)] + a * (reward + df * np.max(self.map_[nextGameStates]) - self.map_[(state, move)])
+        ToDo:
+        make hash function for large boards
+        make a move object? with hash function?
+        or make a seperate hashMove function
+        combine move and board hash in the function in util.py
 
 
 
@@ -62,6 +77,7 @@ def main():
     while(True):
         a.takeTurnLearn()
         a.printGame()
+        a.resetGame()
         waitForInput()
 
 
