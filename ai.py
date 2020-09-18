@@ -23,6 +23,8 @@ class Ai:
     def resetGame(self):
         if self.game_.isWon():
             self.game_ = Game()
+            print(self.map_)
+            waitForInput()
 
     def printGame(self):
         self.game_.printBoard()
@@ -56,19 +58,13 @@ class Ai:
         for nM in nextMoves:
             nextGameStates.append((nextState, nM))
 
-        #print("map", self.map_.map_)
-        #print(state)
-        #print(move)
-        #print("map[(state, move)]",self.map_[(state, move)])
-        #print("max val", np.max(self.map_[nextGameStates]))
+        print(self.map_[(state, move)])
+        print(nextGameStates)
+        print(np.max(self.map_[nextGameStates]))
+
         self.map_[(state, move)] = self.map_[(state, move)] + a * (reward + df * np.max(self.map_[nextGameStates]) - self.map_[(state, move)])
-        ToDo:
-        make hash function for large boards
-        make a move object? with hash function?
-        or make a seperate hashMove function
-        combine move and board hash in the function in util.py
-
-
+        need to deal with situation where a small board is a cats game, but agent is sent there
+        no moves makes the agent error out. If cats game, agent can move anywhere?
 
 
 def main():
@@ -78,7 +74,6 @@ def main():
         a.takeTurnLearn()
         a.printGame()
         a.resetGame()
-        waitForInput()
 
 
 

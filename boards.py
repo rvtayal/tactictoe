@@ -1,4 +1,5 @@
 import numpy as np
+from util import base3toBase10
 import math
 
 class SmallBoard:
@@ -130,6 +131,11 @@ class SmallBoard:
 
         return disp
 
+    def linearize(self):
+        ch = self.getCharArray()
+        return np.reshape(ch, (9,))
+
+
     def getState(self):
         return self.board
 
@@ -142,8 +148,19 @@ class LargeBoard:
         self.winner = None
         self.prevMove = None
 
-    #def __hash__(self):
-    #    for b in self.boards
+    def __hash__(self):
+        curHash = ''
+        for b in self.boards:
+            lin = b.linearize()
+            for i in lin:
+                if i == 'X':
+                    curHash = curHash + '1'
+                elif i == 'O':
+                    curHash = curHash + '2'
+                else:
+                    curHash = curHash + '0'
+        return base3toBase10(curHash)
+
 
     def checkWinner(self):
         for i in range(9):
@@ -248,13 +265,13 @@ class LargeBoard:
                 
 def main():
     b = LargeBoard()
-    b.getDisplay(True)
     b.move('x', 5, (2, 0))
-    b.getDisplay(True)
     b.move('o', 7, (1, 1))
     b.move('o', 7, (1, 0))
     b.move('o', 7, (1, 2))
+    b.move('o', 0, (0, 0))
     b.getDisplay(True)
+    print(hash(b))
 
 if __name__ == "__main__":
     main()

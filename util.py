@@ -18,6 +18,12 @@ class HashMap:
         else:
             self.hashfn = hashfn
 
+    def __str__(self):
+        s = ''
+        for i in self.map_.keys():
+            s = s + str(i) + '\t' + str(self.map_[i]) + '\n'
+        return s
+
     def clear(self):
         self.map_ = {}
 
@@ -52,6 +58,24 @@ class HashMap:
 def exhash(i):
     return i*5
 
+def base3toBase10(string):
+    base10 = 0
+    while(len(string) > 0):
+        base10 = base10*3
+        cur = string[0]
+        string = string[1:]
+        base10 = base10 + int(cur)
+    return base10
+
+def hashMove(move):
+    if move is None:
+        return 0
+    board, loc = move
+    locStr = str(loc[0]) + str(loc[1])
+    locInt = base3toBase10(locStr)
+    return board*10 + locInt + 1
+
+
 def aiHash(toHash):
     #an item to hash for the ai has the form ((board, move), move)
     a = toHash[0]
@@ -60,19 +84,13 @@ def aiHash(toHash):
     prevMove = a[1]
     curMove = b
 
-    curHash = board.hash()
-
-
-    print(board)
-    print(prevMove)
-    print(curMove)
+    return (hash(board)*100*100) + (hashMove(prevMove)*100) + (hashMove(curMove))
 
 def main():
-    d = HashMap()
-    d[1] = 'l'
-    print(d.map_)
-    print(d[1])
-
+    h = HashMap()
+    h[1] = '1'
+    h[2] = '2'
+    print(h)
 
 if __name__ == "__main__":
     main()
