@@ -8,11 +8,15 @@ class Game:
         self.boardToMoveIn = None
         self.validMoves = self.getValidMoves()
 
-    def isWon(self):
-        return not (self.board.winner is None)
+    def isOver(self):
+        if not (self.board.winner is None):
+            return True
+        else:
+            if len(self.getValidMoves()) == 0:
+                return True
 
     def getWinner(self):
-        return self.board,winner
+        return self.board.winner
 
     def printBoard(self):
         disp = self.board.getDisplay()
@@ -46,18 +50,19 @@ class Game:
 
         pBoard, pSquare = self.board.prevMove
         pSquareNum = (pSquare[0] * 3) + pSquare[1]
-        if self.board.winners[pSquareNum] == 0:
+        if (self.board.winners[pSquareNum] == 0) and (not self.board.boards[pSquareNum].isCatsGame()):
             # sent to unwon square, move in required square
             self.boardToMoveIn = pSquareNum
             return self.getValidMovesInBoard(pSquareNum)
-        else:
-            #sent to board that has been won, all moves valid
-            self.boardToMoveIn = None
-            valid = []
-            for i in range(9):
-                if self.board.winners[i] == 0:
-                    valid.extend(self.getValidMovesInBoard(i))
-            return valid
+
+        #sent to board that has been won, all moves valid
+        #or is cats game
+        self.boardToMoveIn = None
+        valid = []
+        for i in range(9):
+            if self.board.winners[i] == 0:
+                valid.extend(self.getValidMovesInBoard(i))
+        return valid
 
     def getValidMovesInBoard(self, boardnum):
         moves = []

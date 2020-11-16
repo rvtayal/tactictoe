@@ -139,6 +139,15 @@ class SmallBoard:
     def getState(self):
         return self.board
 
+    def isCatsGame(self):
+        if self.winner is not None:
+            return False
+        for i in self.board:
+            for j in i:
+                if j == 0:
+                    return False
+        return True
+
 class LargeBoard:
     def __init__(self):
         self.boards = []
@@ -264,6 +273,7 @@ class LargeBoard:
         return self
                 
 def main():
+    '''
     b = LargeBoard()
     b.move('x', 5, (2, 0))
     b.move('o', 7, (1, 1))
@@ -272,6 +282,23 @@ def main():
     b.move('o', 0, (0, 0))
     b.getDisplay(True)
     print(hash(b))
+    '''
+    b = SmallBoard()
+    b.move('x', 0, 0)
+    b.move('x', 1, 0)
+    b.move('o', 2, 0)
+    b.move('o', 0, 1)
+    b.move('o', 1, 1)
+    b.move('x', 2, 1)
+    b.move('x', 0, 2)
+    b.move('o', 1, 2)
+    print(b.isCatsGame())
+    b.getDisplay()
+    '''
+    xox
+    xoo
+    oxx
+    '''
 
 if __name__ == "__main__":
     main()

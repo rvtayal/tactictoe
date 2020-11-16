@@ -8,9 +8,10 @@ from util import *
 
 # data that influences learning
 r = 1           # reward
-a = 0.05        # learning rate
-df = .9         # discount factor
-epsilon = 0.5   # chance of random turn
+a = 0.1        # learning rate
+df = .95         # discount factor
+epsilon = 0.1   # chance of random turn
+n = 1000000      # learning iterations
 
 
 
@@ -21,10 +22,9 @@ class Ai:
         seed((datetime.now()-datetime(1970,1,1)).total_seconds())
 
     def resetGame(self):
-        if self.game_.isWon():
+        if self.game_.isOver():
             self.game_ = Game()
-            print(self.map_)
-            waitForInput()
+
 
     def printGame(self):
         self.game_.printBoard()
@@ -48,7 +48,7 @@ class Ai:
         self.game_.move(move)
 
         reward = 0
-        if self.game_.isWon():
+        if self.game_.getWinner() == 'x':
             reward = r
 
         nextState = self.game_.getState()
@@ -58,22 +58,27 @@ class Ai:
         for nM in nextMoves:
             nextGameStates.append((nextState, nM))
 
-        print(self.map_[(state, move)])
-        print(nextGameStates)
-        print(np.max(self.map_[nextGameStates]))
+        if len(nextMoves) > 0:
+            maxTerm = np.max(self.map_[nextGameStates])
+        else:
+            maxTerm = 0
 
-        self.map_[(state, move)] = self.map_[(state, move)] + a * (reward + df * np.max(self.map_[nextGameStates]) - self.map_[(state, move)])
-        need to deal with situation where a small board is a cats game, but agent is sent there
-        no moves makes the agent error out. If cats game, agent can move anywhere?
+        self.map_[(state, move)] = self.map_[(state, move)] + a * (reward + df * maxTerm - self.map_[(state, move)])
 
 
 def main():
     a = Ai()
 
-    while(True):
+    i = 0
+
+    while(i < n):
+        print("iteration {}".format(i))
         a.takeTurnLearn()
-        a.printGame()
+        #a.printGame()
         a.resetGame()
+        i = i + 1
+
+    print(a.map_)
 
 
 
