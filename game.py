@@ -87,19 +87,18 @@ class Game:
 
 def main(): 
     game = Game()
-    game.move((1, (1,1)))
-    game.move((4, (2,2)))
-    game.move((8, (1,1)))
-    game.move((4, (2,1)))
-    game.move((7, (1,1)))
-    game.move((4, (2,0)))
-    game.move((6, (1,1)))
-    game.printBoard()
+    # game.move((1, (1,1)))
+    # game.move((4, (2,2)))
+    # game.move((8, (1,1)))
+    # game.move((4, (2,1)))
+    # game.move((7, (1,1)))
+    # game.move((4, (2,0)))
+    # game.move((6, (1,1)))
+    # game.printBoard()
 
-    print(game.getValidMoves())
+    # print(game.getValidMoves())
 
-    '''
-    while not game.isWon():
+    while not game.isOver():
 
         #display game state
         game.printBoard()
@@ -118,7 +117,6 @@ def main():
             game.incrementTurn()
         else:
             print("invalid turn, try again")
-    '''
 
 if __name__ == "__main__":
     main()

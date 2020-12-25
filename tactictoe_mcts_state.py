@@ -1,5 +1,5 @@
 from mcts import State
-from game import 
+from game import *
 import copy
 
 class Tactictoe_State(State):

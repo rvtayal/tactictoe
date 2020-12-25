@@ -271,9 +271,21 @@ class LargeBoard:
 
     def getState(self):
         return self
+
+    def getArray(self):
+        array = np.zeros((9,9))
+        for r in range(3):
+            row = np.zeros((3,9))
+            for c in range(3):
+                boardnum = c + 3*r
+                board = self.boards[boardnum]
+                row[:, 3*c:3*c+3] = board.board
+            array[3*r:3*r+3] = row
+        return array
+
+
                 
 def main():
-    '''
     b = LargeBoard()
     b.move('x', 5, (2, 0))
     b.move('o', 7, (1, 1))
@@ -281,24 +293,7 @@ def main():
     b.move('o', 7, (1, 2))
     b.move('o', 0, (0, 0))
     b.getDisplay(True)
-    print(hash(b))
-    '''
-    b = SmallBoard()
-    b.move('x', 0, 0)
-    b.move('x', 1, 0)
-    b.move('o', 2, 0)
-    b.move('o', 0, 1)
-    b.move('o', 1, 1)
-    b.move('x', 2, 1)
-    b.move('x', 0, 2)
-    b.move('o', 1, 2)
-    print(b.isCatsGame())
-    b.getDisplay()
-    '''
-    xox
-    xoo
-    oxx
-    '''
+    print(b.getArray())
 
 if __name__ == "__main__":
     main()
