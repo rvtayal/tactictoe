@@ -132,6 +132,15 @@ class TacticToeNet(torch.nn.Module):
         return layers
 
 
+class TacticToeLoss(torch.nn.Module):
+    @staticmethod
+    def forward(v_pred, p_pred, v_target, p_target):
+        v_squared_error = torch.square(v_pred - v_target)
+        p_cross_entropy = -p_target * torch.log(1e-15 + p_pred)
+        # L2 regularization occurs in the optimizer with the weight_decay parameter
+        return torch.mean(v_squared_error + p_cross_entropy)
+
+
 def main():
     g = Game()
     g.move((2, (1,1)))
