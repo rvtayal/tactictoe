@@ -74,13 +74,9 @@ class OutLayers(torch.nn.Module):
         v = torch.nn.functional.relu(self.fc_v1(v))
         v = torch.tanh(self.fc_v2(v))
 
-        print(x.shape)
         p = self.conv_p(x)
-        print(p.shape)
         p = torch.nn.functional.relu(self.batch_norm_p(p))
-        print(p.shape)
         p = p.view(-1, 81*2)
-        print(p.shape)
         p = torch.nn.functional.softmax(self.fc_p(p), dim=1).flatten()
 
         return v, p
