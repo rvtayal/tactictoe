@@ -19,5 +19,10 @@ class Test2(Test):
 		print("blah")
 
 if __name__ == "__main__":
-	t = Test2()
-	t.b()
+	l = []
+	l.append((1,2))
+	l.append((3,4))
+	l.append((4,5))
+
+	for i, b in enumerate(l):
+		print(i, b)

@@ -99,6 +99,7 @@ class TacticToeNet(torch.nn.Module):
         x = self.conv_layers(g)
         x = self.res_layers(x)
         v,p = self.out_layers(x)
+        # v = TacticToeNet.decode_policy(game, p)
         return v.flatten(), p
 
 
@@ -127,12 +128,31 @@ class TacticToeNet(torch.nn.Module):
         # layer for who's turn it is - not needed, always from x pov
         return layers
 
+    @staticmethod
+    def decode_policy(game, policy):
+        ret = torch.zeros(81)
+        valid_moves = game.getValidMoves()
+        for i, move in enumerate(valid_moves):
+            p = policy[i]
+            ret[TacticToeNet.encode_move(move)] = p
+
+        return ret
+
+    @staticmethod
+    def encode_move(move):
+        b, square = move
+        dc, dr = (3 * (b%3), 3 * (b//3))
+        r = square[0] + dr
+        c = square[1] + dc
+        ret = 9*r + c
+        return ret
+
 
 class TacticToeLoss(torch.nn.Module):
     @staticmethod
     def forward(v_pred, p_pred, v_target, p_target):
         v_squared_error = torch.square(v_pred - v_target)
-        p_cross_entropy = -p_target * torch.log(1e-15 + p_pred)
+        p_cross_entropy = -1*p_target * torch.log(1e-15 + p_pred)
         # L2 regularization occurs in the optimizer with the weight_decay parameter
         return torch.mean(v_squared_error + p_cross_entropy)
 
