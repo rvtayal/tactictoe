@@ -29,7 +29,7 @@ class Game:
 
     def incrementTurn(self):
         #set turn
-        if self.turn is 'x':
+        if self.turn == 'x':
             self.turn = 'o'
         else:
             self.turn = 'x'
@@ -77,9 +77,11 @@ class Game:
         if move not in self.validMoves:
             return False
         ret = self.board.move(self.turn, move[0], move[1])
-
+        print(ret)
+        print(self.turn)
         if ret:
             self.incrementTurn()
+        print(self.turn)
         return ret
 
     def invert(self):
@@ -112,10 +114,7 @@ def main():
         boardR = int(input("What row?\t"))
         boardC = int(input("What column?\t"))
 
-        if game.move((boardR, boardC)):
-            #move to next turn
-            game.incrementTurn()
-        else:
+        if not game.move((game.boardToMoveIn, (boardR, boardC))):
             print("invalid turn, try again")
 
 if __name__ == "__main__":

@@ -67,9 +67,9 @@ class SmallBoard:
 
     def invert(self):
         self.board = self.board * -1
-        if self.winner is 'x':
+        if self.winner == 'x':
             self.winner = 'o'
-        elif self.winner is 'o':
+        elif self.winner == 'o':
             self.winner = 'x'
 
     def move(self, who, row, col):
@@ -81,7 +81,7 @@ class SmallBoard:
             return False
         if self.winner is not None:
             return False
-        if who is 'x':
+        if who == 'x':
             self.board[row,col] = 1
         else:
             self.board[row,col] = -1
@@ -90,7 +90,7 @@ class SmallBoard:
 
     def getDisplay(self, p=False):
         disp = np.empty((5,5), dtype='str')
-        if self.winner is None:
+        if self.winner == None:
             disp[0, [1, 3]] = '|'
             disp[2, [1, 3]] = '|'
             disp[4, [1, 3]] = '|'
@@ -104,7 +104,7 @@ class SmallBoard:
             for i in range(3):
                 for j in range(3):
                     disp[i*2, j*2] = chAr[i,j]
-        elif self.winner is 'x':
+        elif self.winner == 'x':
             disp[:, :] = ' '
             disp[0, 0] = '\\'
             disp[1, 1] = '\\'
@@ -174,12 +174,12 @@ class LargeBoard:
     def checkWinner(self):
         for i in range(9):
             if self.winners[i] == 0:
-                if self.boards[i].winner is 'x':
+                if self.boards[i].winner == 'x':
                     self.winners[i] = 1
-                elif self.boards[i].winner is 'o':
+                elif self.boards[i].winner == 'o':
                     self.winners[i] = -1
 
-        if self.winner is None:
+        if self.winner == None:
             self.checkRows()
             self.checkCols()
             self.checkDiags()
@@ -264,9 +264,9 @@ class LargeBoard:
             b.invert()
         for i in range(9):
             self.winners[i] = self.winners[i] * -1
-        if self.winner is 'x':
+        if self.winner == 'x':
             self.winner = 'o'
-        elif self.winner is 'o':
+        elif self.winner == 'o':
             self.winner = 'x'
 
     def getState(self):
