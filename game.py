@@ -7,6 +7,7 @@ class Game:
         self.turn = 'x'
         self.boardToMoveIn = None
         self.validMoves = self.getValidMoves()
+        #TODO: add move history, pop method to get previous boards
 
     def isOver(self):
         if not (self.board.winner is None):
@@ -77,45 +78,56 @@ class Game:
         if move not in self.validMoves:
             return False
         ret = self.board.move(self.turn, move[0], move[1])
-        print(ret)
-        print(self.turn)
         if ret:
             self.incrementTurn()
-        print(self.turn)
         return ret
 
     def invert(self):
         self.board.invert()
 
-def main(): 
-    game = Game()
-    # game.move((1, (1,1)))
-    # game.move((4, (2,2)))
-    # game.move((8, (1,1)))
-    # game.move((4, (2,1)))
-    # game.move((7, (1,1)))
-    # game.move((4, (2,0)))
-    # game.move((6, (1,1)))
-    # game.printBoard()
+# def main(): 
+from user_player import UserPlayer
+from random_player import RandomPlayer
 
-    # print(game.getValidMoves())
+def play_game(player_x, player_o):
+    game = Game()
+    px = player_x()
+    po = player_o()
 
     while not game.isOver():
 
-        #display game state
-        game.printBoard()
-        print(game.turn + "'s turn:")
-
-        if game.boardToMoveIn is None:
-            game.boardToMoveIn = int(input("Which board would you like to play in?\t"))
+        if game.turn == 'x':
+            move = px.move(game.board)
+            res = game.move(move)
+            while not res:
+                px.move(game.board)
+                res = game.move(move)
         else:
-            print("moving in board " + str(game.boardToMoveIn))
+            move = po.move(game.board)
+            res = game.move(move)
+            while not res:
+                po.move(game.board)
+                res = game.move(move)
+        
+        # input()
 
-        boardR = int(input("What row?\t"))
-        boardC = int(input("What column?\t"))
+        # #display game state
+        # game.printBoard()
+        # print(game.turn + "'s turn:")
 
-        if not game.move((game.boardToMoveIn, (boardR, boardC))):
-            print("invalid turn, try again")
+        # if game.boardToMoveIn is None:
+        #     game.boardToMoveIn = int(input("Which board would you like to play in?\t"))
+        # else:
+        #     print("moving in board " + str(game.boardToMoveIn))
+
+        # boardR = int(input("What row?\t"))
+        # boardC = int(input("What column?\t"))
+
+        # if not game.move((game.boardToMoveIn, (boardR, boardC))):        #     print("invalid turn, try again"))
+        #     print("invalid turn, try again"))
+        #     print("invalid turn, try again"))
+        #     print("invalid turn, try again"))
+        #     print("invalid turn, try again"))
 
 if __name__ == "__main__":
-    main()
+    play_game(UserPlayer, RandomPlayer)

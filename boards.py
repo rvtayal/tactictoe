@@ -259,6 +259,16 @@ class LargeBoard:
                 print(row)
         return disp
 
+    def printBoard(self):
+        disp = self.getDisplay()
+        r, c = disp.shape
+        for i in range(r):
+            row = ''
+            for j in range(c):
+                row += disp[i,j] + ' '
+            print(row)
+        print("Last move: {}".format(self.prevMove))
+
     def invert(self):
         for b in self.boards:
             b.invert()
