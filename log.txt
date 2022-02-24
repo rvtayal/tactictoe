@@ -1,0 +1,6 @@
+2/23/2022: 
+    - Started all over
+    - created board file with numpy representation
+    - logic to get legal moves
+    + TODO: turn logic (x to o)
+    + TODO: text based game representation
